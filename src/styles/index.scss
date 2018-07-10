@@ -1,0 +1,25 @@
+$icon-font-path: 'assets/fonts/bootstrap/';
+@import '../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap';
+
+.listing{
+  position: relative;
+}
+
+.loadoverlay{
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  display: none;
+  text-align: center;
+  &.disable{
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: rgba(255,255,255,0.7);
+  }
+  .content{
+    display: inline-block;
+    padding: 1em;
+  }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app'>
+<head>
+  <meta charset="UTF-8">
+  <title>Pack Listing</title>
+  <link rel="stylesheet" href="bundle.css">
+</head>
+<body>
+  <h1>Pack Listing</h1>
+  <div class="listing container-fluid" ng-controller="mainCtrl as vm">
+    <div class="loadoverlay" ng-class="{disable:vm.loadingPacks}">
+      <div class="content">LOADING</div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead class="row">
+          <tr>
+            <th>PackID</th>
+            <th>Title</th>
+            <th>Release</th>
+            <th>Flags</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="pack in vm.packs"
+              ng-class="{
+                          warning: vm.isOverdue(pack),
+                          info: vm.isSelected(pack)
+                        }"
+              ng-click="vm.togglePack(pack)">
+            <td>{{pack.packid}}</td>
+            <td>{{pack.title}}</td>
+            <td>{{pack.packdate | mysqlDate}}</td>
+            <td>
+              <span class="glyphicon glyphicon-book"
+                    ng-class="{'text-success': pack.flag_pub}"></span>
+              <span class="glyphicon glyphicon-send"
+                    ng-class="{'text-success': pack.flag_email}"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pagination
+      total-items="vm.packData.total"
+      ng-model="vm.packData.page"
+      max-size="5"
+      boundary-links="true"
+      ng-change="vm.updatePage()"
+      ng-hide="vm.loadingPacks"
+      rotate="false"></pagination>
+    <script src="bundle.js"></script>
+  </body>
+  </html>
